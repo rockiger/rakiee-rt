@@ -33,7 +33,16 @@
           false))))
 
 
-(deftest test-home
-  (with-mounted-component (rc/home-page)
-    (fn [c div]
-      (is (found-in #"Welcome to" div)))))
+;; (deftest test-home
+;;   (with-mounted-component (rc/home-page)
+;;     (fn [c div]
+;;       (is (found-in #"Welcome to" div)))))
+
+(deftest test-task
+  (let [t1 {:todo rc/TODO  :headline "Task 1"}
+        t2 {:todo rc/DOING :headline "Task 2"}
+        t3 {:todo rc/DONE  :headline "Task 3"}]
+    (do
+      (is (= (rc/task t1) [:tr [:td "TODO"]  [:td "Task 1"]]))
+      (is (= (rc/task t2) [:tr [:td "DOING"] [:td "Task 2"]]))
+      (is (= (rc/task t3) [:tr [:td "DONE"]  [:td "Task 3"]])))))

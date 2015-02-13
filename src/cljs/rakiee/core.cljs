@@ -7,43 +7,93 @@
               [cljsjs.react :as react])
     (:import goog.History))
 
-;; -------------------------
-;; Views
 
-(defn home-page []
-  [:div [:h2 "Welcome to rakiee"]
-   [:div [:a {:href "#/about"} "go to about page"]]])
+;; TODO unit test for reagent
+;; TODO figwhell for node-webkit
 
-(defn about-page []
-  [:div [:h2 "About rakiee"]
-   [:div [:a {:href "#/"} "go to the home page"]]])
+;; =================
+;; Constants:
 
-(defn current-page []
-  [:div [(session/get :current-page)]])
+(def TODO "TODO")
+(def DONE "DONE")
+(def DOING "DOING")
+(def ALL "ALL")
 
-;; -------------------------
-;; Routes
-(secretary/set-config! :prefix "#")
+;; =================
+;; Data definitions:
 
-(secretary/defroute "/" []
-  (session/put! :current-page #'home-page))
+;; World State is ... (give WS a better name)
 
-(secretary/defroute "/about" []
-  (session/put! :current-page #'about-page))
+(def app-state
+  (reagent/atom
+   {:tasks
+    [{:todo TODO :headline "Remove Ace-dependency from enterTask.js"}
+     {:todo DOING :headline "AuxMoney Test starten"}
+     {:todo DOING :headline "Karo und Diana das Briefing für das Designn schicken"}
+     {:todo DOING :headline "Licht reklamieren, Kontoauszug raussuchen"}
+     {:todo DOING :headline "Bräter 4 Stunden toasten"}
+     {:todo TODO :headline "Ich teile nicht! schreiben"}
+     {:todo DONE :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
 
-;; -------------------------
-;; History
-;; must be called after routes have been defined
-(defn hook-browser-navigation! []
-  (doto (History.)
-    (events/listen
-     EventType/NAVIGATE
-     (fn [event]
-       (secretary/dispatch! (.-token event))))
-    (.setEnabled true)))
+;; =================
+;; Functions:
+
+
+(defn task [t]
+  [:tr
+   [:td (:todo t)]
+   [:td (:headline t)]])
+
+(defn task-list []
+  [:table
+   (for [t (:tasks @app-state)]
+     [task t])])
+
+(defn big-bang []
+  (reagent/render-component
+    [task-list]
+    (.getElementById js/document "root")))
+
+;(big-bang)
+
+
+
+;; ;; -------------------------
+;; ;; Views
+
+;; (defn home-page []
+;;   [:div [:h2 "Welcome to rakiee"]
+;;    [:div [:a {:href "#/about"} "go to about page"]]])
+
+;; (defn about-page []
+;;   [:div [:h2 "About rakiee"]
+;;    [:div [:a {:href "#/"} "go to the home page"]]])
+
+;; (defn current-page []
+;;   [:div [(session/get :current-page)]])
+
+;; ;; -------------------------
+;; ;; Routes
+;; (secretary/set-config! :prefix "#")
+
+;; (secretary/defroute "/" []
+;;   (session/put! :current-page #'home-page))
+
+;; (secretary/defroute "/about" []
+;;   (session/put! :current-page #'about-page))
+
+;; ;; -------------------------
+;; ;; History
+;; ;; must be called after routes have been defined
+;; (defn hook-browser-navigation! []
+;;   (doto (History.)
+;;     (events/listen
+;;      EventType/NAVIGATE
+;;      (fn [event]
+;;        (secretary/dispatch! (.-token event))))
+;;     (.setEnabled true)))
 
 ;; -------------------------
 ;; Initialize app
 (defn init! []
-  (hook-browser-navigation!)
-  (reagent/render-component [current-page] (.getElementById js/document "app")))
+  (reagent/render-component [task-list] (.getElementById js/document "app")))
