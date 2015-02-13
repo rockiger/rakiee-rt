@@ -1,7 +1,8 @@
 (ns rakiee.core-test
   (:require [cemerick.cljs.test :refer-macros [is are deftest testing use-fixtures done]]
             [reagent.core :as reagent :refer [atom]]
-            [rakiee.core :as rc]))
+            [rakiee.core :as rc]
+            [rakiee.constants :as c]))
 
 
 (def isClient (not (nil? (try (.-document js/window)
@@ -39,9 +40,9 @@
 ;;       (is (found-in #"Welcome to" div)))))
 
 (deftest test-task
-  (let [t1 {:todo rc/TODO  :headline "Task 1"}
-        t2 {:todo rc/DOING :headline "Task 2"}
-        t3 {:todo rc/DONE  :headline "Task 3"}]
+  (let [t1 {:todo c/TODO  :headline "Task 1"}
+        t2 {:todo c/DOING :headline "Task 2"}
+        t3 {:todo c/DONE  :headline "Task 3"}]
     (do
       (is (= (rc/task t1) [:tr [:td "TODO"]  [:td "Task 1"]]))
       (is (= (rc/task t2) [:tr [:td "DOING"] [:td "Task 2"]]))

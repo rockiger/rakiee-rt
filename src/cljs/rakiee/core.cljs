@@ -4,7 +4,8 @@
               [secretary.core :as secretary :include-macros true]
               [goog.events :as events]
               [goog.history.EventType :as EventType]
-              [cljsjs.react :as react])
+              [cljsjs.react :as react]
+              [rakiee.constants :as c])
     (:import goog.History))
 
 
@@ -12,33 +13,30 @@
 ;; TODO figwhell for node-webkit
 
 ;; =================
-;; Constants:
-
-(def TODO "TODO")
-(def DONE "DONE")
-(def DOING "DOING")
-(def ALL "ALL")
+;; Constants in rakiee.data-defintions
 
 ;; =================
-;; Data definitions:
+;; Data definitions in rakiee.data-defintions
+
+;; TODO define data definitions in clojurescript
 
 ;; World State is ... (give WS a better name)
 
 (def app-state
   (reagent/atom
    {:tasks
-    [{:todo TODO :headline "Remove Ace-dependency from enterTask.js"}
-     {:todo DOING :headline "AuxMoney Test starten"}
-     {:todo DOING :headline "Karo und Diana das Briefing für das Designn schicken"}
-     {:todo DOING :headline "Licht reklamieren, Kontoauszug raussuchen"}
-     {:todo DOING :headline "Bräter 4 Stunden toasten"}
-     {:todo TODO :headline "Ich teile nicht! schreiben"}
-     {:todo DONE :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
+    [{:todo c/TODO :headline "Remove Ace-dependency from enterTask.js"}
+     {:todo c/DOING :headline "AuxMoney Test starten"}
+     {:todo c/DOING :headline "Karo und Diana das Briefing für das Designn schicken"}
+     {:todo c/DOING :headline "Licht reklamieren, Kontoauszug raussuchen"}
+     {:todo c/DOING :headline "Bräter 4 Stunden toasten"}
+     {:todo c/TODO :headline "Ich teile nicht! schreiben"}
+     {:todo c/DONE :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
 
 ;; =================
 ;; Functions:
 
-
+;;
 (defn task [t]
   [:tr
    [:td (:todo t)]
