@@ -81,7 +81,12 @@
                                                :compiler {:output-to "target/test.js"
                                                           :optimizations :whitespace
                                                           :pretty-print true
-                                                          :preamble ["react/react.js"]}}}
+                                                          :preamble ["react/react.js"]}
+                                               :notify-command ["phantomjs" :cljs.test/runner
+                                                                "test/vendor/es5-shim.js"
+                                                                "test/vendor/es5-sham.js"
+                                                                "test/vendor/console-polyfill.js"
+                                                                "target/test.js"]}}
                                :test-commands {"unit" ["phantomjs" :runner
                                                        "test/vendor/es5-shim.js"
                                                        "test/vendor/es5-sham.js"

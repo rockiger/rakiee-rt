@@ -25,19 +25,20 @@
 (def app-state
   (reagent/atom
    {:tasks
-    [{:todo c/TODO :headline "Remove Ace-dependency from enterTask.js"}
-     {:todo c/DOING :headline "AuxMoney Test starten"}
-     {:todo c/DOING :headline "Karo und Diana das Briefing für das Designn schicken"}
-     {:todo c/DOING :headline "Licht reklamieren, Kontoauszug raussuchen"}
-     {:todo c/DOING :headline "Bräter 4 Stunden toasten"}
-     {:todo c/TODO :headline "Ich teile nicht! schreiben"}
-     {:todo c/DONE :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
+    [{:todo c/TODO :headline "Remove Ace-dependency from enterTask.js" :key "orgNode_33.##" }
+     {:todo c/DOING :headline "AuxMoney Test starten" :key "orgNode_34.##"}
+     {:todo c/DOING :headline "Karo und Diana das Briefing für das Designn schicken" :key "orgNode_35.##"}
+     {:todo c/DOING :headline "Licht reklamieren, Kontoauszug raussuchen" :key "orgNode_36.##"}
+     {:todo c/DOING :headline "Bräter 4 Stunden toasten" :key "orgNode_37.##"}
+     {:todo c/TODO :headline "Ich teile nicht! schreiben" :key "orgNode_38.##"}
+     {:todo c/DONE :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates" :key "orgNode_39.##"}]}))
 
 ;; =================
 ;; Functions:
 
 ;;
 (defn task [t]
+  ;^{:key t}
   [:tr
    [:td (:todo t)]
    [:td (:headline t)]])
